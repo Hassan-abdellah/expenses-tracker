@@ -1,5 +1,5 @@
-import ExpensesForm from "./components/expenses/ExpensesForm";
-import { Toaster } from "./components/ui/sonner";
+import ExpensesForm from "@/components/expenses/ExpensesForm";
+import { Toaster } from "@/components/ui/sonner";
 const App = () => {
   return (
     <main>
