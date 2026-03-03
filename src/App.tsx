@@ -1,5 +1,13 @@
+import ExpensesForm from "./components/expenses/ExpensesForm";
+import { Toaster } from "./components/ui/sonner";
 const App = () => {
-  return <div className="text-center text-green-100">App</div>;
+  return (
+    <main>
+      <ExpensesForm />
+
+      <Toaster />
+    </main>
+  );
 };
 
 export default App;

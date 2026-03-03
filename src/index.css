@@ -132,6 +132,25 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply font-Roboto;
+    @apply font-Roboto bg-light-gray text-muted-black;
+  }
+}
+
+@layer utilities {
+  .input-field {
+    @apply text-muted-black focus-visible:border-light-gray focus-visible:ring-green-100/80 focus-visible:ring-[3px]
+    aria-invalid:ring-destructive/20 aria-invalid:ring-[3px] dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive;
+  }
+  .input-label {
+    @apply text-muted-black;
+  }
+
+  .input-group {
+    @apply has-[[data-slot=input-group-control]:focus-visible]:border-light-gray has-[[data-slot=input-group-control]:focus-visible]:ring-green-100/80 has-[[data-slot=input-group-control]:focus-visible]:ring-[3px]
+    has-[[data-slot][aria-invalid=true]]:ring-destructive/20 has-[[data-slot][aria-invalid=true]]:ring-[3px] dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40 has-[[data-slot][aria-invalid=true]]:border-destructive;
+  }
+
+  .date-input-trigger {
+    @apply data-[state=open]:border-light-gray data-[state=open]:ring-green-100/80 data-[state=open]:ring-[3px];
   }
 }
