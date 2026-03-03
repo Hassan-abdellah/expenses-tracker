@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import FormErrorMessage from "./FormErrorMessage";
-import { Field, FieldLabel } from "../ui/field";
+import { Field, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   InputGroupTextarea,
-} from "../ui/input-group";
+} from "@/components/ui/input-group";
 
 const TextAreaController = ({
   id,

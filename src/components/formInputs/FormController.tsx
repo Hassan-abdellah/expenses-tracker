@@ -1,8 +1,8 @@
 import React from "react";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import FormErrorMessage from "./FormErrorMessage";
-import { Field, FieldLabel } from "../ui/field";
-import { defaultNumberValidKeys } from "../../constants";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { defaultNumberValidKeys } from "@/constants";
 
 const FormController = ({
   id,

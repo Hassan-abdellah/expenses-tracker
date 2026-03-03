@@ -4,21 +4,21 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { formSchema } from "../../formSchemas/expensesFormSchema";
+} from "@/components/ui/card";
+import { formSchema } from "@/formSchemas/expensesFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
-import { FieldGroup } from "../ui/field";
-import FormController from "../formInputs/FormController";
-import DatePicker from "../formInputs/DatePicker";
-import TextAreaController from "../formInputs/TextAreaController";
-import { Button } from "../ui/button";
 import { PlusIcon } from "lucide-react";
-import { formateDate } from "../../utils";
-import { supabase } from "../../utils/supabase/createClient";
+import { formateDate } from "@/utils";
+import { supabase } from "@/utils/supabase/createClient";
 
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { FieldGroup } from "@/components/ui/field";
+import DatePicker from "@/components/formInputs/DatePicker";
+import FormController from "@/components/formInputs/FormController";
+import TextAreaController from "@/components/formInputs/TextAreaController";
 
 const ExpensesForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
