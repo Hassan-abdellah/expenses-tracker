@@ -134,10 +134,10 @@ const ExpensesForm = () => {
             </FieldGroup>
           </form>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="border-t border-light-gray">
           <Button
-            className="border-2 border-green-200 hover:bg-green-200 bg-transparent w-full rounded-3xl text-green-200 hover:text-white cursor-pointer py-5 transition-colors duration-300"
-            type="submit" // Change from type="button" to type="submit"
+            className="relative border-2 border-green-200 hover:bg-green-200 bg-transparent w-full rounded-3xl text-green-200 hover:text-white cursor-pointer py-5 transition-colors duration-300"
+            type="submit"
             form="form-rhf-demo" // Connect button to form
             disabled={form.formState.isSubmitting}
           >
