@@ -11,14 +11,13 @@ import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { PlusIcon } from "lucide-react";
 import { formateDate } from "@/utils";
-import { supabase } from "@/utils/supabase/createClient";
-
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import DatePicker from "@/components/formInputs/DatePicker";
 import FormController from "@/components/formInputs/FormController";
 import TextAreaController from "@/components/formInputs/TextAreaController";
+import { createExpense } from "@/utils/expenses";
 
 const ExpensesForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -31,16 +30,7 @@ const ExpensesForm = () => {
     },
   });
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    const { error } = await supabase
-      .from("expenses")
-      .insert({
-        effective_date: data.effective_date,
-        label: data.label,
-        description: data.description,
-        amount: Number(data.amount),
-      })
-      .single();
-
+    const { error } = await createExpense(data);
     if (error) {
       toast.error(error?.message, { position: "top-right" });
     } else {
