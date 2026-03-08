@@ -3,49 +3,84 @@ import {
   Card,
   CardAction,
   CardContent,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { EyeIcon, PencilIcon, TagIcon, TrashIcon } from "lucide-react";
+import { Calendar, PencilIcon, TagIcon, TrashIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { format } from "date-fns";
+import DeleteModal from "./DeleteModal";
+import { deleteExpense } from "@/utils/expenses";
+import { toast } from "sonner";
 
-const ExpenseCard = ({ expense }: { expense: expeneseType }) => {
+const ExpenseCard = ({
+  expense,
+  onDeleteSuccess,
+}: {
+  expense: expeneseType;
+  onDeleteSuccess: (id: number) => void;
+}) => {
+  const handleDeleteExpense = async (expenseId: number) => {
+    const { error } = await deleteExpense(expenseId);
+    if (error) {
+      toast.error(error, { position: "top-right" });
+    } else {
+      toast.success("Deleted Succesfully", { position: "top-right" });
+      // remove it from the UI
+      onDeleteSuccess(expenseId);
+    }
+  };
   return (
     <Card className="w-150">
-      <CardHeader>
-        <CardTitle className="bg-green-200 text-white text-base font-medium w-fit px-2 py-1 rounded-md">
-          {expense.label}
-        </CardTitle>
-        {/* <CardAction className="flex items-center gap-2">
+      <CardHeader className="border-b border-gray-100 flex items-center justify-between [.border-b]:pb-2">
+        <CardTitle className="text-green-200">{expense.label}</CardTitle>
+        <CardAction className="flex items-center gap-2">
           <Tooltip>
-            <TooltipTrigger
-              asChild
-              className="text-gray-300 cursor-pointer w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300"
-            >
-              <PencilIcon className="w-2 h-2" />
+            <TooltipTrigger className="hover:bg-gray-300 hover:text-white text-gray-300 cursor-pointer border-2 border-gray-300 rounded-full w-7 h-7 flex items-center justify-center">
+              <PencilIcon className="w-4 h-4" />
             </TooltipTrigger>
             <TooltipContent>
               <p>Edit</p>
             </TooltipContent>
           </Tooltip>
 
-          <Tooltip>
-            <TooltipTrigger asChild className="cursor-pointer">
-              <TrashIcon className="w-5 h-5 text-destructive" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Delete</p>
-            </TooltipContent>
-          </Tooltip>
-        </CardAction> */}
+          <DeleteModal
+            modalTitle="Delete Expense"
+            modalDescription="Are You Sure you want to delete this Expense?"
+            trigger={(setOpen) => (
+              <Tooltip>
+                <TooltipTrigger
+                  onClick={() => setOpen(true)}
+                  className="hover:bg-destructive hover:text-white text-destructive cursor-pointer border-2 border-destructive rounded-full w-7 h-7 flex items-center justify-center"
+                >
+                  <TrashIcon className="w-4 h-4" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Delete</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+            onDelete={() =>
+              expense.id ? handleDeleteExpense(expense?.id) : undefined
+            }
+          />
+        </CardAction>
       </CardHeader>
       <CardContent>
         <p className="text-gray-400">{expense.description}</p>
-        <div className="flex items-center gap-1.5 mt-2 ">
-          <TagIcon className="w-4 h-4 text-green-200" />
-          <span className="text-green-200">{expense.amount} E£</span>
-        </div>
       </CardContent>
+
+      <CardFooter className="border-t border-gray-100 flex gap-4 [.border-t]:pt-2">
+        <div className="flex items-center gap-1.5 mt-2 text-gray-500">
+          <TagIcon className="w-4 h-4" />
+          <span>{expense.amount} E£</span>
+        </div>
+        <div className="flex items-center gap-1.5 mt-2 text-gray-500">
+          <Calendar className="w-4 h-4" />
+          <span>{format(expense.effective_date, "dd-MM-yyyy")}</span>
+        </div>
+      </CardFooter>
     </Card>
   );
 };
