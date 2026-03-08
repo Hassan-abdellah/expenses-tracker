@@ -32,7 +32,7 @@ const ExpenseCard = ({
     }
   };
   return (
-    <Card className="w-150">
+    <Card className="w-full">
       <CardHeader className="border-b border-gray-100 flex items-center justify-between [.border-b]:pb-2">
         <CardTitle className="text-green-200">{expense.label}</CardTitle>
         <CardAction className="flex items-center gap-2">

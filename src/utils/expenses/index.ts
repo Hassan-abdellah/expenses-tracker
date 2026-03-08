@@ -1,4 +1,4 @@
-import type { expeneseType } from "@/types";
+import type { expeneseType, expensesFilterType } from "@/types";
 import { supabase } from "../supabase/createClient";
 import { format } from "date-fns";
 
@@ -22,8 +22,25 @@ type GetExpensesResponse = {
   error: Error | null;
 };
 
-export const getExpenses = async (): Promise<GetExpensesResponse> => {
-  const { data, error } = await supabase.from("expenses").select("*");
+export const getExpenses = async (
+  filters?: expensesFilterType,
+): Promise<GetExpensesResponse> => {
+  let query = supabase
+    .from("expenses")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (filters?.startDate) {
+    query = query.gte("effective_date", filters.startDate);
+  }
+  if (filters?.endDate) {
+    query = query.lte("effective_date", filters.endDate);
+  }
+  if (filters?.effectiveDate) {
+    query = query.eq("effective_date", filters.effectiveDate);
+  }
+
+  const { data, error } = await query;
   return {
     expenses: data as expeneseType[] | [],
     error,
