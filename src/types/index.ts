@@ -6,3 +6,9 @@ export type expeneseType = {
   created_at?: string;
   id?: number;
 };
+
+export type expensesFilterType = {
+  startDate?: string;
+  endDate?: string;
+  effectiveDate?: string;
+};
