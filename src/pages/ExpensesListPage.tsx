@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { expeneseType } from "@/types";
 import { getExpenses } from "@/utils/expenses";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const ExpensesListPage = () => {
@@ -53,13 +53,27 @@ const ExpensesListPage = () => {
             </Card>
           ))}
         </div>
-      ) : null}
+      ) : (
+        <Fragment>
+          {expenses.length > 0 ? (
+            <div className="flex flex-col gap-2 items-center justify-center">
+              {expenses.map((expense) => (
+                <ExpenseCard
+                  key={expense.id}
+                  expense={expense}
+                  onDeleteSuccess={(id) =>
+                    setExpenses((prev) => prev.filter((item) => item.id !== id))
+                  }
+                />
+              ))}
+            </div>
+          ) : null}
+        </Fragment>
+      )}
 
-      {expenses.length > 0 ? (
-        <div className="flex flex-col gap-2 items-center justify-center">
-          {expenses.map((expense) => (
-            <ExpenseCard key={expense.id} expense={expense} />
-          ))}
+      {!isLoading && expenses.length === 0 ? (
+        <div>
+          <h3 className="text-muted-black text-center">No Expenses yet!</h3>
         </div>
       ) : null}
     </section>
