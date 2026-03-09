@@ -8,7 +8,7 @@ const ExpensesListPage = () => {
     useFetchExpenses();
 
   return (
-    <section className="flex flex-col max-w-xl mx-auto my-40">
+    <section className="flex flex-col max-w-xl mx-auto my-8">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-muted-black text-2xl">
           Expenses{" "}
