@@ -7,6 +7,7 @@ export const useFetchExpenses = () => {
   const [expenses, setExpenses] = useState<expeneseType[] | []>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // filter expesnses
   const fetchFilteredExpenses = async (filters?: expensesFilterType) => {
     setIsLoading(true);
 
@@ -18,6 +19,11 @@ export const useFetchExpenses = () => {
       setExpenses(expenses || []);
     }
     setIsLoading(false);
+  };
+
+  // delete expense from UI
+  const deleteExpense = (id: number) => {
+    setExpenses((prev) => prev.filter((item) => item.id !== id));
   };
 
   useEffect(() => {
@@ -46,5 +52,11 @@ export const useFetchExpenses = () => {
     };
   }, []); // Empty dependency array is correct for "on mount" data fetching
 
-  return { isLoading, expenses, setExpenses, fetchFilteredExpenses };
+  return {
+    isLoading,
+    expenses,
+    setExpenses,
+    fetchFilteredExpenses,
+    deleteExpense,
+  };
 };
