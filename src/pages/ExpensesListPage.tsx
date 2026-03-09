@@ -4,7 +4,7 @@ import ExpensesSkeleton from "@/components/expenses/ExpensesSkeleton";
 import { useFetchExpenses } from "@/hooks/useFetchExpenses";
 import { Fragment } from "react";
 const ExpensesListPage = () => {
-  const { isLoading, expenses, setExpenses, fetchFilteredExpenses } =
+  const { isLoading, expenses, fetchFilteredExpenses, deleteExpense } =
     useFetchExpenses();
 
   return (
@@ -31,9 +31,7 @@ const ExpensesListPage = () => {
                 <ExpenseCard
                   key={expense.id}
                   expense={expense}
-                  onDeleteSuccess={(id) =>
-                    setExpenses((prev) => prev.filter((item) => item.id !== id))
-                  }
+                  onDeleteSuccess={(id) => deleteExpense(id)}
                 />
               ))}
             </div>
