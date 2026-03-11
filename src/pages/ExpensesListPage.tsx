@@ -4,8 +4,13 @@ import ExpensesSkeleton from "@/components/expenses/ExpensesSkeleton";
 import { useFetchExpenses } from "@/hooks/useFetchExpenses";
 import { Fragment } from "react";
 const ExpensesListPage = () => {
-  const { isLoading, expenses, fetchFilteredExpenses, deleteExpense } =
-    useFetchExpenses();
+  const {
+    isLoading,
+    expenses,
+    fetchFilteredExpenses,
+    deleteExpense,
+    handleUpdateExpens,
+  } = useFetchExpenses();
 
   return (
     <section className="flex flex-col max-w-xl mx-auto my-8">
@@ -32,6 +37,7 @@ const ExpensesListPage = () => {
                   key={expense.id}
                   expense={expense}
                   onDeleteSuccess={(id) => deleteExpense(id)}
+                  handleUpdateExpens={(expense) => handleUpdateExpens(expense)}
                 />
               ))}
             </div>

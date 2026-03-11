@@ -13,13 +13,16 @@ import { format } from "date-fns";
 import DeleteModal from "./DeleteModal";
 import { deleteExpense } from "@/utils/expenses";
 import { toast } from "sonner";
+import UpdateExpensesForm from "./UpdateExpensesForm";
 
 const ExpenseCard = ({
   expense,
   onDeleteSuccess,
+  handleUpdateExpens,
 }: {
   expense: expeneseType;
   onDeleteSuccess: (id: number) => void;
+  handleUpdateExpens: (expense: expeneseType) => void;
 }) => {
   const handleDeleteExpense = async (expenseId: number) => {
     const { error } = await deleteExpense(expenseId);
@@ -36,14 +39,25 @@ const ExpenseCard = ({
       <CardHeader className="border-b border-gray-100 flex items-center justify-between [.border-b]:pb-2">
         <CardTitle className="text-green-200">{expense.label}</CardTitle>
         <CardAction className="flex items-center gap-2">
-          <Tooltip>
-            <TooltipTrigger className="hover:bg-gray-300 hover:text-white text-gray-300 cursor-pointer border-2 border-gray-300 rounded-full w-7 h-7 flex items-center justify-center">
-              <PencilIcon className="w-4 h-4" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Edit</p>
-            </TooltipContent>
-          </Tooltip>
+          {expense.id ? (
+            <UpdateExpensesForm
+              expenseId={expense?.id}
+              handleUpdateExpens={(expense) => handleUpdateExpens(expense)}
+              trigger={(setOpen) => (
+                <Tooltip>
+                  <TooltipTrigger
+                    onClick={() => setOpen(true)}
+                    className="hover:bg-gray-300 hover:text-white text-gray-300 cursor-pointer border-2 border-gray-300 rounded-full w-7 h-7 flex items-center justify-center"
+                  >
+                    <PencilIcon className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Edit</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            />
+          ) : null}
 
           <DeleteModal
             modalTitle="Delete Expense"
