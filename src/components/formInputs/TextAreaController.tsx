@@ -46,7 +46,7 @@ const TextAreaController = ({
           />
           <InputGroupAddon align="block-end">
             <InputGroupText className="tabular-nums text-muted-black">
-              {value.length}/100 characters
+              {value?.length}/100 characters
             </InputGroupText>
           </InputGroupAddon>
         </InputGroup>

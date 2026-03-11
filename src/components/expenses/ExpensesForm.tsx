@@ -124,7 +124,7 @@ const ExpensesForm = () => {
             </FieldGroup>
           </form>
         </CardContent>
-        <CardFooter className="border-t border-light-gray">
+        <CardFooter className="border-t border-light-gray pt-5">
           <Button
             className="relative border-2 border-green-200 hover:bg-green-200 bg-transparent w-full rounded-3xl text-green-200 hover:text-white cursor-pointer py-5 transition-colors duration-300"
             type="submit"

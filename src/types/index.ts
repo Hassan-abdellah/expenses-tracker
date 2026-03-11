@@ -11,4 +11,5 @@ export type expensesFilterType = {
   startDate?: string;
   endDate?: string;
   effectiveDate?: string;
+  id?: number;
 };
