@@ -13,3 +13,10 @@ export type expensesFilterType = {
   effectiveDate?: string;
   id?: number;
 };
+
+export type expenseFormValues = {
+  effective_date: string;
+  label: string;
+  description: string;
+  amount: string;
+};
