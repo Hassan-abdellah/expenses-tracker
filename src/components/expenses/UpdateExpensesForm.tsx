@@ -14,22 +14,19 @@ import {
   type ReactNode,
   type SetStateAction,
 } from "react";
-import { FieldGroup } from "../ui/field";
-import { Controller, useForm } from "react-hook-form";
-import DatePicker from "../formInputs/DatePicker";
-import FormController from "../formInputs/FormController";
-import TextAreaController from "../formInputs/TextAreaController";
 import { formateDate } from "@/utils";
-import { formSchema } from "@/formSchemas/expensesFormSchema";
+import { expenseFormSchema } from "@/formSchemas/expensesFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Skeleton } from "../ui/skeleton";
 import { format } from "date-fns";
 import { Button } from "../ui/button";
-import { PlusIcon } from "lucide-react";
+import { PencilIcon } from "lucide-react";
 import { updateExpense } from "@/utils/expenses";
 import type { expeneseType } from "@/types";
+import ViewExpenseSkeleton from "./ViewExpenseSkeleton";
+import ExpenseFormInputs from "./ExpenseFormInputs";
+import { useForm } from "react-hook-form";
 
 const UpdateExpensesForm = ({
   expenseId,
@@ -52,8 +49,8 @@ const UpdateExpensesForm = ({
     } else return;
   }, [expenseId, open]);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof expenseFormSchema>>({
+    resolver: zodResolver(expenseFormSchema),
     defaultValues: {
       effective_date: formateDate(new Date()),
       amount: "",
@@ -61,7 +58,7 @@ const UpdateExpensesForm = ({
       label: "",
     },
   });
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function handleUpdateExpense(data: z.infer<typeof expenseFormSchema>) {
     const { error, expense: updatedExpense } = await updateExpense(
       expense?.id,
       data,
@@ -113,96 +110,13 @@ const UpdateExpensesForm = ({
           </DialogHeader>
 
           {isLoading ? (
-            <div className="flex flex-col gap-6 px-4">
-              <Skeleton className="bg-light-gray h-8 w-full" />
-              <Skeleton className="bg-light-gray h-8 w-full" />
-              <Skeleton className="bg-light-gray h-16 w-full" />
-              <Skeleton className="bg-light-gray h-8 w-full" />
-              <Skeleton className="bg-light-gray h-8 w-full" />
-            </div>
+            <ViewExpenseSkeleton />
           ) : (
             <Fragment>
-              <form
-                id="form-rhf-demo"
-                className="px-4"
-                onSubmit={form.handleSubmit(onSubmit)}
-              >
-                <FieldGroup>
-                  {/* Effective Date */}
-                  <Controller
-                    name="effective_date"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <DatePicker
-                        id="form-rhf-demo-effective_date"
-                        label="Effective Date"
-                        value={field.value}
-                        handleChange={(date) => {
-                          form.setValue("effective_date", formateDate(date));
-                        }}
-                        invalid={fieldState.invalid}
-                        error={fieldState.error?.message}
-                      />
-                    )}
-                  />
-                  {/* label */}
-                  <Controller
-                    name="label"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <FormController
-                        id="form-rhf-demo-label"
-                        data-invalid={fieldState.invalid}
-                        name="label"
-                        label="Expense Label"
-                        type="text"
-                        placeholder="e.g. Groceries, Rent, etc."
-                        value={field.value}
-                        onchange={field.onChange}
-                        error={fieldState.error?.message}
-                        invalid={fieldState.invalid}
-                      />
-                    )}
-                  />
-                  {/* description */}
-                  <Controller
-                    name="description"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <TextAreaController
-                        id="form-rhf-demo-description"
-                        label="Description"
-                        name="description"
-                        placeholder="1 Kg of rice, 1 dozen eggs, etc."
-                        value={field.value}
-                        onchange={field.onChange}
-                        error={fieldState.error?.message}
-                        invalid={fieldState.invalid}
-                      />
-                    )}
-                  />
-                  {/* amount */}
-                  <Controller
-                    name="amount"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <FormController
-                        id="form-rhf-demo-amount"
-                        data-invalid={fieldState.invalid}
-                        name="amount"
-                        label="Amount"
-                        type="text"
-                        placeholder="10"
-                        value={field.value}
-                        onchange={field.onChange}
-                        error={fieldState.error?.message}
-                        invalid={fieldState.invalid}
-                        isNumber={true}
-                      />
-                    )}
-                  />
-                </FieldGroup>
-              </form>
+              <ExpenseFormInputs
+                form={form}
+                handleSubmit={handleUpdateExpense}
+              />
 
               <DialogFooter className="border-t border-gray-100 pt-4 px-4">
                 <Button
@@ -211,11 +125,11 @@ const UpdateExpensesForm = ({
                   form="form-rhf-demo" // Connect button to form
                   disabled={form.formState.isSubmitting}
                 >
-                  <span>Save</span>
-
                   <div className="w-6 h-6 bg-green-200 text-white rounded-full flex items-center justify-center">
-                    <PlusIcon />
+                    <PencilIcon />
                   </div>
+
+                  <span>Update</span>
                 </Button>
               </DialogFooter>
             </Fragment>

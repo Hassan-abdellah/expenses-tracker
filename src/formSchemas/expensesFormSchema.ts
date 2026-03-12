@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const expenseFormSchema = z.object({
   effective_date: z.string({
     message: "Effective Date is Required.",
   }),
