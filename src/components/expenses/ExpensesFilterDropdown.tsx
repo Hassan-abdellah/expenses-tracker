@@ -33,6 +33,14 @@ const ExpensesFilterDropdown = ({
 
         {[
           {
+            label: "All",
+            onclick: () => {
+              onFilter({});
+              setActiveFilter(0);
+            },
+            isActive: activeFilter === 0,
+          },
+          {
             label: "Today",
             onclick: () => {
               onFilter({ effectiveDate: format(new Date(), "yyyy-MM-dd") });
