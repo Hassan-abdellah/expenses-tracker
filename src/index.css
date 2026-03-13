@@ -155,4 +155,18 @@
   .date-input-trigger {
     @apply data-[state=open]:border-light-gray data-[state=open]:ring-green-100/80 data-[state=open]:ring-[3px];
   }
+
+  .pill-button {
+    @apply relative border-2 border-transparent bg-green-200 w-full rounded-3xl  text-white cursor-pointer py-5 
+    hover:text-green-200 hover:bg-transparent hover:border-green-200
+    transition-colors duration-300;
+  }
+
+  .pill-button-icon {
+    @apply w-6 h-6 bg-green-200 text-white rounded-full flex items-center justify-center;
+  }
+
+  .navlink {
+    @apply relative p-1 text-light-gray shadow-[0_-2px_0_0_inset] shadow-light-gray hover:shadow-[0_-100px_0_0_inset] hover:text-green-200 transition-all duration-300;
+  }
 }

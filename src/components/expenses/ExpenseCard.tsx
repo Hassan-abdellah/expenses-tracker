@@ -10,7 +10,7 @@ import {
 import { Calendar, PencilIcon, TagIcon, TrashIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { format } from "date-fns";
-import DeleteModal from "./DeleteModal";
+import DeleteModal from "../common/DeleteModal";
 import { deleteExpense } from "@/utils/expenses";
 import { toast } from "sonner";
 import UpdateExpensesForm from "./UpdateExpensesForm";

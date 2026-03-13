@@ -47,14 +47,14 @@ const CreateExpensesForm = () => {
         </CardContent>
         <CardFooter className="border-t border-light-gray pt-5">
           <Button
-            className="relative border-2 border-green-200 hover:bg-green-200 bg-transparent w-full rounded-3xl text-green-200 hover:text-white cursor-pointer py-5 transition-colors duration-300"
+            className="pill-button"
             type="submit"
             form="form-rhf-demo" // Connect button to form
             disabled={form.formState.isSubmitting}
           >
             <span>Save</span>
 
-            <div className="w-6 h-6 bg-green-200 text-white rounded-full flex items-center justify-center">
+            <div className="pill-button-icon">
               <PlusIcon />
             </div>
           </Button>

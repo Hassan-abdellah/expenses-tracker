@@ -10,12 +10,12 @@ const Navbar = () => {
 
         <ul className="flex items-center gap-2.5">
           <li>
-            <Link to="/expenses" className="text-light-gray">
+            <Link to="/expenses" className="navlink">
               Expenses
             </Link>
           </li>
           <li>
-            <Link to="/" className="text-light-gray">
+            <Link to="/" className="navlink">
               Add New
             </Link>
           </li>
