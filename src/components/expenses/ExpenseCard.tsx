@@ -11,28 +11,34 @@ import { Calendar, PencilIcon, TagIcon, TrashIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { format } from "date-fns";
 import DeleteModal from "../common/DeleteModal";
-import { deleteExpense } from "@/utils/expenses";
-import { toast } from "sonner";
 import UpdateExpensesForm from "./UpdateExpensesForm";
 
 const ExpenseCard = ({
   expense,
-  onDeleteSuccess,
-  handleUpdateExpens,
+  handleDelete,
+  handleUpdateExpense,
 }: {
   expense: expeneseType;
-  onDeleteSuccess: (id: number) => void;
-  handleUpdateExpens: (expense: expeneseType) => void;
+  handleDelete: (expenseId: number) => Promise<void>;
+  handleUpdateExpense: (
+    expenseId: number,
+    data: expeneseType,
+  ) => Promise<{
+    error: Error | null;
+  }>;
 }) => {
   const handleDeleteExpense = async (expenseId: number) => {
-    const { error } = await deleteExpense(expenseId);
-    if (error) {
-      toast.error(error, { position: "top-right" });
-    } else {
-      toast.success("Deleted Succesfully", { position: "top-right" });
-      // remove it from the UI
-      onDeleteSuccess(expenseId);
-    }
+    await handleDelete(expenseId);
+  };
+
+  const handleUpdate = async (
+    expenseId: number,
+    data: expeneseType,
+  ): Promise<{
+    error: Error | null;
+  }> => {
+    const { error } = await handleUpdateExpense(expenseId, data);
+    return { error };
   };
   return (
     <Card className="w-full">
@@ -42,7 +48,9 @@ const ExpenseCard = ({
           {expense.id ? (
             <UpdateExpensesForm
               expenseId={expense?.id}
-              handleUpdateExpens={(expense) => handleUpdateExpens(expense)}
+              handleUpdateExpens={(expenseId, expense) =>
+                handleUpdate(expenseId, expense)
+              }
               trigger={(setOpen) => (
                 <Tooltip>
                   <TooltipTrigger

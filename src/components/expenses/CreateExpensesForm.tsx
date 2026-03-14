@@ -12,11 +12,13 @@ import * as z from "zod";
 import { PlusIcon } from "lucide-react";
 import { formateDate } from "@/utils";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { createExpense } from "@/utils/expenses";
 import ExpenseFormInputs from "./ExpenseFormInputs";
+import { useExpenses } from "@/hooks/useExpenses";
+import CustomButton from "../common/CustomButton";
 
 const CreateExpensesForm = () => {
+  const { createExpense } = useExpenses({ autoFetch: false });
+
   const form = useForm<z.infer<typeof expenseFormSchema>>({
     resolver: zodResolver(expenseFormSchema),
     defaultValues: {
@@ -46,18 +48,15 @@ const CreateExpensesForm = () => {
           <ExpenseFormInputs form={form} handleSubmit={handleAddExpense} />
         </CardContent>
         <CardFooter className="border-t border-light-gray pt-5">
-          <Button
-            className="pill-button"
+          <CustomButton
             type="submit"
-            form="form-rhf-demo" // Connect button to form
+            formId="form-rhf-demo" // Connect button to form
             disabled={form.formState.isSubmitting}
-          >
-            <span>Save</span>
-
-            <div className="pill-button-icon">
-              <PlusIcon />
-            </div>
-          </Button>
+            isLoading={form.formState.isSubmitting}
+            title="Save"
+            icon={<PlusIcon />}
+            suffixIcon={true}
+          />
         </CardFooter>
       </Card>
     </section>
