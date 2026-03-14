@@ -1,7 +1,7 @@
 import ExpenseCard from "@/components/expenses/ExpenseCard";
 import ExpensesFilterDropdown from "@/components/expenses/ExpensesFilterDropdown";
 import ExpensesSkeleton from "@/components/expenses/ExpensesSkeleton";
-import { useFetchExpenses } from "@/hooks/useFetchExpenses";
+import { useExpenses } from "@/hooks/useExpenses";
 import { Fragment } from "react";
 const ExpensesListPage = () => {
   const {
@@ -9,8 +9,8 @@ const ExpensesListPage = () => {
     expenses,
     fetchFilteredExpenses,
     deleteExpense,
-    handleUpdateExpens,
-  } = useFetchExpenses();
+    updateExpense,
+  } = useExpenses();
 
   return (
     <section className="flex flex-col max-w-xl mx-auto my-8">
@@ -36,8 +36,10 @@ const ExpensesListPage = () => {
                 <ExpenseCard
                   key={expense.id}
                   expense={expense}
-                  onDeleteSuccess={(id) => deleteExpense(id)}
-                  handleUpdateExpens={(expense) => handleUpdateExpens(expense)}
+                  handleDelete={(id) => deleteExpense(id)}
+                  handleUpdateExpense={(expesneId, expense) =>
+                    updateExpense(expesneId, expense)
+                  }
                 />
               ))}
             </div>

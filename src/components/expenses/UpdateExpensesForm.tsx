@@ -5,7 +5,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useFetchExpenses } from "@/hooks/useFetchExpenses";
 import {
   Fragment,
   useEffect,
@@ -18,15 +17,14 @@ import { formateDate } from "@/utils";
 import { expenseFormSchema } from "@/formSchemas/expensesFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { toast } from "sonner";
 import { format } from "date-fns";
-import { Button } from "../ui/button";
 import { PencilIcon } from "lucide-react";
-import { updateExpense } from "@/utils/expenses";
 import type { expeneseType } from "@/types";
 import ViewExpenseSkeleton from "./ViewExpenseSkeleton";
 import ExpenseFormInputs from "./ExpenseFormInputs";
 import { useForm } from "react-hook-form";
+import CustomButton from "../common/CustomButton";
+import { useExpenses } from "@/hooks/useExpenses";
 
 const UpdateExpensesForm = ({
   expenseId,
@@ -35,9 +33,14 @@ const UpdateExpensesForm = ({
 }: {
   expenseId: number;
   trigger: (setOpen: Dispatch<SetStateAction<boolean>>) => ReactNode;
-  handleUpdateExpens: (expense: expeneseType) => void;
+  handleUpdateExpens: (
+    expenseId: number,
+    data: expeneseType,
+  ) => Promise<{
+    error: Error | null;
+  }>;
 }) => {
-  const { fetchSingleExpense, expense, isLoading } = useFetchExpenses({
+  const { fetchSingleExpense, expense, isLoading } = useExpenses({
     autoFetch: false,
   });
 
@@ -58,19 +61,12 @@ const UpdateExpensesForm = ({
       label: "",
     },
   });
-  async function handleUpdateExpense(data: z.infer<typeof expenseFormSchema>) {
-    const { error, expense: updatedExpense } = await updateExpense(
-      expense?.id,
-      data,
-    );
-    if (error) {
-      toast.error(error?.message, { position: "top-right" });
-    } else {
-      toast.success("updated successfully", { position: "top-right" });
+  async function handleUpdate(data: z.infer<typeof expenseFormSchema>) {
+    const { error } = expense?.id
+      ? await handleUpdateExpens(expense?.id, data)
+      : {};
+    if (!error) {
       form.reset();
-      if (updatedExpense) {
-        handleUpdateExpens(updatedExpense);
-      }
       setOpen(false);
     }
   }
@@ -113,24 +109,18 @@ const UpdateExpensesForm = ({
             <ViewExpenseSkeleton />
           ) : (
             <Fragment>
-              <ExpenseFormInputs
-                form={form}
-                handleSubmit={handleUpdateExpense}
-              />
+              <ExpenseFormInputs form={form} handleSubmit={handleUpdate} />
 
               <DialogFooter className="border-t border-gray-100 pt-4 px-4">
-                <Button
-                  className="pill-button"
+                <CustomButton
                   type="submit"
-                  form="form-rhf-demo" // Connect button to form
+                  formId="form-rhf-demo" // Connect button to form
                   disabled={form.formState.isSubmitting}
-                >
-                  <div className="pill-button-icon">
-                    <PencilIcon />
-                  </div>
-
-                  <span>Update</span>
-                </Button>
+                  isLoading={form.formState.isSubmitting}
+                  title="Update"
+                  icon={<PencilIcon />}
+                  prefixIcon={true}
+                />
               </DialogFooter>
             </Fragment>
           )}
