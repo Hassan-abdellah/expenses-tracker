@@ -1,3 +1,4 @@
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 import { Link } from "react-router";
 
 const Navbar = () => {
@@ -7,6 +8,14 @@ const Navbar = () => {
         <Link to="/expenses" className="text-light-gray text-xl">
           Expenses Tracker
         </Link>
+
+        {/* <Show when="signed-out">
+          <SignInButton />
+          <SignUpButton />
+        </Show>
+        <Show when="signed-in">
+          <UserButton />
+        </Show> */}
 
         <ul className="flex items-center gap-2.5">
           <li>
