@@ -5,6 +5,7 @@ export type expeneseType = {
   amount: string | number;
   created_at?: string;
   id?: number;
+  user_id?: string | null | undefined;
 };
 
 export type expensesFilterType = {

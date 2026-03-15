@@ -15,10 +15,11 @@ import { toast } from "sonner";
 import ExpenseFormInputs from "./ExpenseFormInputs";
 import { useExpenses } from "@/hooks/useExpenses";
 import CustomButton from "../common/CustomButton";
+import { useAuth } from "@clerk/react";
 
 const CreateExpensesForm = () => {
   const { createExpense } = useExpenses({ autoFetch: false });
-
+  const { userId } = useAuth();
   const form = useForm<z.infer<typeof expenseFormSchema>>({
     resolver: zodResolver(expenseFormSchema),
     defaultValues: {
@@ -29,7 +30,7 @@ const CreateExpensesForm = () => {
     },
   });
   async function handleAddExpense(data: z.infer<typeof expenseFormSchema>) {
-    const { error } = await createExpense(data);
+    const { error } = await createExpense({ ...data, user_id: userId });
     if (error) {
       toast.error(error?.message, { position: "top-right" });
     } else {

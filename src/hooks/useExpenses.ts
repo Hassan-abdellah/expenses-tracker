@@ -86,6 +86,7 @@ export const useExpenses = (params: params = defaultParams) => {
         label: data.label,
         description: data.description,
         amount: Number(data.amount),
+        user_id: data.user_id,
       })
       .single();
 

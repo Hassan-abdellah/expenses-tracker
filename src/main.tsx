@@ -15,7 +15,11 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <ClerkProvider
+      publishableKey={PUBLISHABLE_KEY}
+      signUpUrl="/auth/sign-up"
+      signInUrl="/auth/sign-in"
+    >
       <BrowserRouter>
         <TooltipProvider>
           <App />
