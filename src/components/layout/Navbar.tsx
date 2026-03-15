@@ -1,3 +1,4 @@
+import { authRoutes, expesnsesRoutes } from "@/data/routePaths";
 import { Show, UserButton } from "@clerk/react";
 import { Link } from "react-router";
 
@@ -5,20 +6,20 @@ const Navbar = () => {
   return (
     <header className="bg-green-200 h-(--nav-height) py-2">
       <nav className="max-w-7xl mx-auto flex  justify-between">
-        <Link to="/expenses" className="text-light-gray text-xl">
+        <Link to={expesnsesRoutes.list} className="text-light-gray text-xl">
           Expenses Tracker
         </Link>
 
         <Show when="signed-out">
           <ul className="flex items-center gap-2.5">
             <li>
-              <Link to="/auth/sign-in" className="navlink">
+              <Link to={authRoutes.login} className="navlink">
                 Log In
               </Link>
             </li>
 
             <li>
-              <Link to="/auth/sign-up" className="navlink">
+              <Link to={authRoutes.register} className="navlink">
                 Register
               </Link>
             </li>
@@ -27,18 +28,18 @@ const Navbar = () => {
         <Show when="signed-in">
           <ul className="flex gap-2.5">
             <li>
-              <Link to="/expenses" className="navlink">
+              <Link to={expesnsesRoutes.list} className="navlink">
                 Expenses
               </Link>
             </li>
             <li>
-              <Link to="/" className="navlink">
+              <Link to={expesnsesRoutes.addNew} className="navlink">
                 Add New
               </Link>
             </li>
 
             <li>
-              <UserButton signInUrl="/auth/sign-in" />
+              <UserButton signInUrl={authRoutes.login} />
             </li>
           </ul>
         </Show>
