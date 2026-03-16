@@ -96,7 +96,7 @@ const ExpenseCard = ({
       <CardFooter className="border-t border-gray-100 flex gap-4 [.border-t]:pt-2">
         <div className="flex items-center gap-1.5 mt-2 text-gray-500">
           <TagIcon className="w-4 h-4" />
-          <span>{expense.amount} E£</span>
+          <span>{expense.amount.toLocaleString("en-US")} E£</span>
         </div>
         <div className="flex items-center gap-1.5 mt-2 text-gray-500">
           <Calendar className="w-4 h-4" />

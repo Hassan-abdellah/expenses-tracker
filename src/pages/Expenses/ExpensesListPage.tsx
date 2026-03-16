@@ -18,7 +18,7 @@ const ExpensesListPage = () => {
         <h3 className="text-muted-black text-2xl">
           Expenses{" "}
           {expenses.length
-            ? `(${expenses.length}) ${expenses.reduce((total, item) => total + Number(item.amount), 0)} E£`
+            ? `(${expenses.length}) ${expenses.reduce((total, item) => total + Number(item.amount), 0).toLocaleString("en-US")} E£`
             : null}
         </h3>
         <ExpensesFilterDropdown
