@@ -170,3 +170,10 @@
     @apply relative p-1 text-light-gray shadow-[0_-2px_0_0_inset] shadow-light-gray hover:shadow-[0_-100px_0_0_inset] hover:text-green-200 transition-all duration-300;
   }
 }
+
+/* for clerk footer in user dropdown */
+/* for clerk footer in auth forms */
+.cl-internal-l2l775,
+.cl-internal-1dauvpw {
+  display: none !important;
+}
