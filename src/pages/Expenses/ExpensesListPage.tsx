@@ -2,16 +2,22 @@ import ExpenseCard from "@/components/expenses/ExpenseCard";
 import ExpensesFilterDropdown from "@/components/expenses/ExpensesFilterDropdown";
 import ExpensesSkeleton from "@/components/expenses/ExpensesSkeleton";
 import { useExpenses } from "@/hooks/useExpenses";
-import { Fragment } from "react";
+import { useAllExpenses } from "@/hooks/useExpensesQuery";
+import type { expensesFilterType } from "@/types";
+import { Fragment, useState } from "react";
 const ExpensesListPage = () => {
   const {
-    isLoading,
-    expenses,
-    fetchFilteredExpenses,
+    // isLoading,
+    // expenses,
+    // fetchFilteredExpenses,
     deleteExpense,
     updateExpense,
-  } = useExpenses();
+  } = useExpenses({ autoFetch: false });
 
+  const [filters, setFilters] = useState<expensesFilterType | null>(null);
+
+  const { isLoading, data } = useAllExpenses(filters);
+  const expenses = data?.data || [];
   return (
     <section className="flex flex-col max-w-xl mx-auto my-8">
       <div className="flex items-center justify-between mb-4">
@@ -21,9 +27,7 @@ const ExpensesListPage = () => {
             ? `(${expenses.length}) ${expenses.reduce((total, item) => total + Number(item.amount), 0).toLocaleString("en-US")} E£`
             : null}
         </h3>
-        <ExpensesFilterDropdown
-          onFilter={(filters) => fetchFilteredExpenses(filters)}
-        />
+        <ExpensesFilterDropdown setFilters={setFilters} />
       </div>
 
       {isLoading ? (
