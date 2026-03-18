@@ -1,4 +1,4 @@
-// hooks/useExpenses.ts
+// hooks/useExpensesQuery.ts
 import { useQuery } from "@tanstack/react-query";
 import { useSupabaseClient } from "./useSupabaseClient";
 import type { expeneseType, expensesFilterType } from "@/types";
@@ -44,6 +44,34 @@ export const useAllExpenses = (filters?: expensesFilterType | null) => {
   return useQuery<GetExpenseResponse>({
     queryKey: ["expenses", filters],
     queryFn: () => fetchAllExpenses(filters),
+  });
+};
+
+// Fetch all expenses
+export const useViewExpense = (expenseId: number, enabled: boolean = true) => {
+  const supabase = useSupabaseClient();
+
+  // filter expesnses
+  const fetchSingleExpense = async (
+    expenseId: number,
+  ): Promise<expeneseType> => {
+    const { data, error } = await supabase
+      .from("expenses")
+      .select()
+      .eq("id", expenseId)
+      .single();
+
+    if (error) {
+      throw error; // React Query will catch this
+    }
+
+    return data as expeneseType; // Return data directly
+  };
+
+  return useQuery<expeneseType>({
+    queryKey: ["expenses", expenseId],
+    queryFn: () => fetchSingleExpense(expenseId),
+    enabled: enabled && expenseId ? true : false, // Only run if enabled AND id exists
   });
 };
 
