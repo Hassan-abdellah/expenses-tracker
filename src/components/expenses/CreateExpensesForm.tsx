@@ -13,12 +13,13 @@ import { PlusIcon } from "lucide-react";
 import { formateDate } from "@/utils";
 import { toast } from "sonner";
 import ExpenseFormInputs from "./ExpenseFormInputs";
-import { useExpenses } from "@/hooks/useExpenses";
 import CustomButton from "../common/CustomButton";
 import { useAuth } from "@clerk/react";
+import { useExpensesMutation } from "@/hooks/useExpensesMutation";
+import type { SupabaseError } from "@/types";
 
 const CreateExpensesForm = () => {
-  const { createExpense } = useExpenses({ autoFetch: false });
+  const { createExpense } = useExpensesMutation();
   const { userId } = useAuth();
   const form = useForm<z.infer<typeof expenseFormSchema>>({
     resolver: zodResolver(expenseFormSchema),
@@ -30,12 +31,13 @@ const CreateExpensesForm = () => {
     },
   });
   async function handleAddExpense(data: z.infer<typeof expenseFormSchema>) {
-    const { error } = await createExpense({ ...data, user_id: userId });
-    if (error) {
-      toast.error(error?.message, { position: "top-right" });
-    } else {
+    try {
+      await createExpense.mutateAsync({ ...data, user_id: userId });
       toast.success("added successfully", { position: "top-right" });
       form.reset();
+    } catch (error) {
+      const supsabaseErr = error as SupabaseError;
+      toast.error(supsabaseErr.message, { position: "top-right" });
     }
   }
 

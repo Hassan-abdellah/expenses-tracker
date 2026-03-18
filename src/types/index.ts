@@ -21,3 +21,12 @@ export type expenseFormValues = {
   description: string;
   amount: string;
 };
+
+// types/supabase.ts or types/index.ts
+export interface SupabaseError {
+  message: string;
+  code: string;
+  details: string;
+  hint: string;
+  statusCode?: number; // Optional, might not always be present
+}

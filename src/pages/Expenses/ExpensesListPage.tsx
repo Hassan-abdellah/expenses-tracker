@@ -1,19 +1,10 @@
 import ExpenseCard from "@/components/expenses/ExpenseCard";
 import ExpensesFilterDropdown from "@/components/expenses/ExpensesFilterDropdown";
 import ExpensesSkeleton from "@/components/expenses/ExpensesSkeleton";
-import { useExpenses } from "@/hooks/useExpenses";
 import { useAllExpenses } from "@/hooks/useExpensesQuery";
 import type { expensesFilterType } from "@/types";
 import { Fragment, useState } from "react";
 const ExpensesListPage = () => {
-  const {
-    // isLoading,
-    // expenses,
-    // fetchFilteredExpenses,
-    deleteExpense,
-    updateExpense,
-  } = useExpenses({ autoFetch: false });
-
   const [filters, setFilters] = useState<expensesFilterType | null>(null);
 
   const { isLoading, data } = useAllExpenses(filters);
@@ -37,14 +28,7 @@ const ExpensesListPage = () => {
           {expenses.length > 0 ? (
             <div className="flex flex-col gap-2 items-center justify-center">
               {expenses.map((expense) => (
-                <ExpenseCard
-                  key={expense.id}
-                  expense={expense}
-                  handleDelete={(id) => deleteExpense(id)}
-                  handleUpdateExpense={(expesneId, expense) =>
-                    updateExpense(expesneId, expense)
-                  }
-                />
+                <ExpenseCard key={expense.id} expense={expense} />
               ))}
             </div>
           ) : null}

@@ -19,39 +19,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { format } from "date-fns";
 import { PencilIcon } from "lucide-react";
-import type { expeneseType } from "@/types";
+import type { SupabaseError } from "@/types";
 import ViewExpenseSkeleton from "./ViewExpenseSkeleton";
 import ExpenseFormInputs from "./ExpenseFormInputs";
 import { useForm } from "react-hook-form";
 import CustomButton from "../common/CustomButton";
-import { useExpenses } from "@/hooks/useExpenses";
+import { useViewExpense } from "@/hooks/useExpensesQuery";
+import { useExpensesMutation } from "@/hooks/useExpensesMutation";
+import { toast } from "sonner";
 
 const UpdateExpensesForm = ({
   expenseId,
   trigger,
-  handleUpdateExpens,
 }: {
   expenseId: number;
   trigger: (setOpen: Dispatch<SetStateAction<boolean>>) => ReactNode;
-  handleUpdateExpens: (
-    expenseId: number,
-    data: expeneseType,
-  ) => Promise<{
-    error: Error | null;
-  }>;
 }) => {
-  const { fetchSingleExpense, expense, isLoading } = useExpenses({
-    autoFetch: false,
-  });
-
   const [open, setOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (expenseId && open) {
-      fetchSingleExpense(expenseId);
-    } else return;
-  }, [expenseId, open]);
-
+  const { isLoading, data: expense } = useViewExpense(expenseId, open);
+  const { updateExpense } = useExpensesMutation();
   const form = useForm<z.infer<typeof expenseFormSchema>>({
     resolver: zodResolver(expenseFormSchema),
     defaultValues: {
@@ -62,12 +49,14 @@ const UpdateExpensesForm = ({
     },
   });
   async function handleUpdate(data: z.infer<typeof expenseFormSchema>) {
-    const { error } = expense?.id
-      ? await handleUpdateExpens(expense?.id, data)
-      : {};
-    if (!error) {
-      form.reset();
+    try {
+      await updateExpense.mutateAsync({ expenseId, data });
+      toast.success("added successfully", { position: "top-right" });
       setOpen(false);
+      form.reset();
+    } catch (error) {
+      const supsabaseErr = error as SupabaseError;
+      toast.error(supsabaseErr.message, { position: "top-right" });
     }
   }
 
@@ -85,16 +74,16 @@ const UpdateExpensesForm = ({
     });
   }, [expense, isLoading, form]);
 
-  useEffect(() => {
-    if (!open) {
-      form.reset({
-        effective_date: "",
-        amount: "0",
-        description: "",
-        label: "",
-      });
-    }
-  }, [open, form]);
+  // useEffect(() => {
+  //   if (!open) {
+  //     form.reset({
+  //       effective_date: "",
+  //       amount: "0",
+  //       description: "",
+  //       label: "",
+  //     });
+  //   }
+  // }, [open, form]);
 
   return (
     <Fragment>
