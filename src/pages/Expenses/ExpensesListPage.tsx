@@ -1,3 +1,4 @@
+import EmptyExpensesList from "@/components/expenses/EmptyExpensesList";
 import ExpenseCard from "@/components/expenses/ExpenseCard";
 import ExpensesFilterDropdown from "@/components/expenses/ExpensesFilterDropdown";
 import ExpensesSkeleton from "@/components/expenses/ExpensesSkeleton";
@@ -35,11 +36,7 @@ const ExpensesListPage = () => {
         </Fragment>
       )}
 
-      {!isLoading && expenses.length === 0 ? (
-        <div>
-          <h3 className="text-muted-black text-center">No Expenses yet!</h3>
-        </div>
-      ) : null}
+      {!isLoading && expenses.length === 0 ? <EmptyExpensesList /> : null}
     </section>
   );
 };
