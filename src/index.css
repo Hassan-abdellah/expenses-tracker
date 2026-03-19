@@ -169,6 +169,10 @@
   .navlink {
     @apply relative p-1 text-light-gray shadow-[0_-2px_0_0_inset] shadow-light-gray hover:shadow-[0_-100px_0_0_inset] hover:text-green-200 transition-all duration-300;
   }
+
+  .card-width {
+    @apply lg:w-full w-[calc(100%-30px)];
+  }
 }
 
 /* for clerk footer in user dropdown */

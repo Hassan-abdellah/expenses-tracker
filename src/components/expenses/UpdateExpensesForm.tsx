@@ -89,8 +89,8 @@ const UpdateExpensesForm = ({
     <Fragment>
       {trigger(setOpen)}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-sm px-0">
-          <DialogHeader className="mb-4 px-4">
+        <DialogContent className="card-width max-w-sm px-0">
+          <DialogHeader className="mb-4 px-4 text-left">
             <DialogTitle>Edit Expense</DialogTitle>
           </DialogHeader>
 

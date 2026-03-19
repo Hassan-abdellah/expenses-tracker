@@ -30,7 +30,7 @@ const ExpenseCard = ({ expense }: { expense: expeneseType }) => {
 
   return (
     <Fragment>
-      <Card className="w-full">
+      <Card className="card-width">
         <CardHeader className="border-b border-gray-100 flex items-center justify-between [.border-b]:pb-2">
           <CardTitle className="text-green-200">{expense.label}</CardTitle>
           <CardAction className="flex items-center gap-2">

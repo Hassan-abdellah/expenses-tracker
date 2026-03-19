@@ -5,44 +5,49 @@ import { Link } from "react-router";
 const Navbar = () => {
   return (
     <header className="bg-green-200 h-(--nav-height) py-2">
-      <nav className="max-w-7xl mx-auto flex  justify-between">
-        <Link to={expesnsesRoutes.list} className="text-light-gray text-xl">
+      <nav className="xl:max-w-7xl max-w-[calc(100%-30px)]  mx-auto flex  justify-between">
+        <Link
+          to={expesnsesRoutes.list}
+          className="text-light-gray md:text-xl text-lg"
+        >
           Expenses Tracker
         </Link>
 
-        <Show when="signed-out">
-          <ul className="flex items-center gap-2.5">
-            <li>
-              <Link to={authRoutes.login} className="navlink">
-                Log In
-              </Link>
-            </li>
+        <div>
+          <Show when="signed-out">
+            <ul className="flex items-center gap-2.5">
+              <li>
+                <Link to={authRoutes.login} className="navlink">
+                  Log In
+                </Link>
+              </li>
 
-            <li>
-              <Link to={authRoutes.register} className="navlink">
-                Register
-              </Link>
-            </li>
-          </ul>
-        </Show>
-        <Show when="signed-in">
-          <ul className="flex gap-2.5">
-            <li>
-              <Link to={expesnsesRoutes.list} className="navlink">
-                Expenses
-              </Link>
-            </li>
-            <li>
-              <Link to={expesnsesRoutes.addNew} className="navlink">
-                Add New
-              </Link>
-            </li>
+              <li>
+                <Link to={authRoutes.register} className="navlink">
+                  Register
+                </Link>
+              </li>
+            </ul>
+          </Show>
+          <Show when="signed-in">
+            <ul className="flex gap-2.5">
+              <li>
+                <Link to={expesnsesRoutes.list} className="navlink">
+                  Expenses
+                </Link>
+              </li>
+              <li>
+                <Link to={expesnsesRoutes.addNew} className="navlink">
+                  Add New
+                </Link>
+              </li>
 
-            <li>
-              <UserButton signInUrl={authRoutes.login} />
-            </li>
-          </ul>
-        </Show>
+              <li className="md:flex hidden">
+                <UserButton signInUrl={authRoutes.login} />
+              </li>
+            </ul>
+          </Show>
+        </div>
       </nav>
     </header>
   );

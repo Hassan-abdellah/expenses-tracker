@@ -12,7 +12,7 @@ const ExpensesListPage = () => {
   const expenses = data?.data || [];
   return (
     <section className="flex flex-col max-w-xl mx-auto my-8">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 mx-4 lg:mx-0">
         <h3 className="text-muted-black text-2xl">
           Expenses{" "}
           {expenses.length

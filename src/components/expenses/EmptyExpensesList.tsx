@@ -12,7 +12,7 @@ import { Link } from "react-router";
 
 const EmptyExpensesList = () => {
   return (
-    <Empty className="border border-muted-black bg-white my-24">
+    <Empty className="border border-muted-black bg-white my-24 card-width mx-auto">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <Banknote />
