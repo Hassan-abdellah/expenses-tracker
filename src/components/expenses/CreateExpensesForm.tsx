@@ -43,7 +43,7 @@ const CreateExpensesForm = () => {
 
   return (
     <section className="pt-8 pb-2 h-[calc(100%-var(--nav-height))] flex items-center justify-center">
-      <Card className="w-full sm:max-w-md">
+      <Card className="card-width sm:max-w-md">
         <CardHeader>
           <CardTitle>Create New Expense</CardTitle>
         </CardHeader>
