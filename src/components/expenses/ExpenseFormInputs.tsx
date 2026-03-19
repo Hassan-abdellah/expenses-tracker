@@ -7,6 +7,7 @@ import TextAreaController from "../formInputs/TextAreaController";
 import type { expenseFormSchema } from "@/formSchemas/expensesFormSchema";
 import type { expenseFormValues } from "@/types";
 import * as z from "zod";
+import NumericInput from "../formInputs/NumericInput";
 
 const ExpenseFormInputs = ({
   handleSubmit,
@@ -55,6 +56,7 @@ const ExpenseFormInputs = ({
               onchange={field.onChange}
               error={fieldState.error?.message}
               invalid={fieldState.invalid}
+              autoFocus={true}
             />
           )}
         />
@@ -76,7 +78,7 @@ const ExpenseFormInputs = ({
           )}
         />
         {/* amount */}
-        <Controller
+        {/* <Controller
           name="amount"
           control={form.control}
           render={({ field, fieldState }) => (
@@ -92,6 +94,23 @@ const ExpenseFormInputs = ({
               error={fieldState.error?.message}
               invalid={fieldState.invalid}
               isNumber={true}
+            />
+          )}
+        /> */}
+        <Controller
+          name="amount"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <NumericInput
+              id="form-rhf-demo-amount"
+              data-invalid={fieldState.invalid}
+              name="amount"
+              label="Amount"
+              placeholder="10"
+              value={field.value}
+              onchange={field.onChange}
+              error={fieldState.error?.message}
+              invalid={fieldState.invalid}
             />
           )}
         />
