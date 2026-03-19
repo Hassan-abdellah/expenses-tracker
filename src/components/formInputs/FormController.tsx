@@ -15,6 +15,7 @@ const FormController = ({
   error,
   invalid,
   isNumber = false,
+  autoFocus = false,
 }: {
   id: string;
   label: string;
@@ -26,6 +27,7 @@ const FormController = ({
   error: string | undefined;
   invalid: boolean;
   isNumber?: boolean;
+  autoFocus?: boolean;
 }) => {
   return (
     <Field data-invalid={invalid}>
@@ -48,6 +50,7 @@ const FormController = ({
             e.preventDefault();
           }
         }}
+        autoFocus={autoFocus}
       />
       {invalid && <FormErrorMessage error={error} />}
     </Field>

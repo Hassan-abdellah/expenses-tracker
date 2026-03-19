@@ -24,7 +24,7 @@ export const useExpensesMutation = () => {
           effective_date: format(dateObj, "yyyy-MM-dd"),
           label: data.label,
           description: data.description,
-          amount: Number(data.amount),
+          amount: parseFloat(data.amount.toString().replace(/,/g, "")),
           user_id: data.user_id,
         })
         .single();
@@ -57,7 +57,7 @@ export const useExpensesMutation = () => {
           effective_date: format(dateObj, "yyyy-MM-dd"),
           label: data.label,
           description: data.description,
-          amount: Number(data.amount),
+          amount: parseFloat(data.amount.toString().replace(/,/g, "")),
         })
         .eq("id", expenseId)
         .select()
