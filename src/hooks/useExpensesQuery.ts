@@ -1,5 +1,5 @@
 // hooks/useExpensesQuery.ts
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSupabaseClient } from "./useSupabaseClient";
 import type { expeneseType, expensesFilterType } from "@/types";
 
@@ -75,94 +75,68 @@ export const useViewExpense = (expenseId: number, enabled: boolean = true) => {
   });
 };
 
-// // Fetch single post
-// export const usePost = (id: string) => {
-//   return useQuery({
-//     queryKey: postKeys.detail(id),
-//     queryFn: async () => {
-//       const { data, error } = await supabase
-//         .from("posts")
-//         .select(
-//           `
-//           *,
-//           profile:profiles(username, avatar_url)
-//         `,
-//         )
-//         .eq("id", id)
-//         .single();
+type GetPaginatedExpenseResponse = {
+  error: Error | null;
+  data: expeneseType[] | [];
+  totalCount: number | null;
+  nextPage: number | null;
+};
 
-//       if (error) throw error;
-//       return data as Post;
-//     },
-//     enabled: !!id, // Only run if id exists
-//   });
-// };
+// Fetch all expenses
+export const usePaginatedExpenses = (filters?: expensesFilterType | null) => {
+  const supabase = useSupabaseClient();
 
-// // Create post mutation
-// export const useCreatePost = () => {
-//   const queryClient = useQueryClient();
+  const PAGE_SIZE = 10;
 
-//   return useMutation({
-//     mutationFn: async (
-//       newPost: Database["public"]["Tables"]["posts"]["Insert"],
-//     ) => {
-//       const { data, error } = await supabase
-//         .from("posts")
-//         .insert(newPost)
-//         .select()
-//         .single();
+  // filter expesnses
+  const fetchAllExpenses = async ({
+    pageParam,
+  }: {
+    pageParam: unknown;
+  }): Promise<GetPaginatedExpenseResponse> => {
+    // Cast pageParam to number, defaulting to 0
+    const currentPage = typeof pageParam === "number" ? pageParam : 0;
 
-//       if (error) throw error;
-//       return data;
-//     },
-//     onSuccess: () => {
-//       // Invalidate and refetch posts list
-//       queryClient.invalidateQueries({ queryKey: postKeys.lists() });
-//     },
-//   });
-// };
+    let query = supabase
+      .from("expenses")
+      .select("*", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(currentPage, currentPage + PAGE_SIZE - 1);
+    if (filters?.startDate) {
+      query = query.gte("effective_date", filters.startDate);
+    }
+    if (filters?.endDate) {
+      query = query.lte("effective_date", filters.endDate);
+    }
+    if (filters?.effectiveDate) {
+      query = query.eq("effective_date", filters.effectiveDate);
+    }
+    if (filters?.id) {
+      query = query.eq("id", filters.id);
+    }
 
-// // Update post mutation
-// export const useUpdatePost = () => {
-//   const queryClient = useQueryClient();
+    const { data, error, count } = await query;
+    return {
+      data: data as expeneseType[] | [],
+      error,
+      nextPage: data?.length === PAGE_SIZE ? currentPage + PAGE_SIZE : null,
+      totalCount: count,
+    };
+  };
 
-//   return useMutation({
-//     mutationFn: async ({ id, ...updates }: Partial<Post> & { id: string }) => {
-//       const { data, error } = await supabase
-//         .from("posts")
-//         .update(updates)
-//         .eq("id", id)
-//         .select()
-//         .single();
+  const { isFetchingNextPage, isLoading, hasNextPage, fetchNextPage, data } =
+    useInfiniteQuery<GetPaginatedExpenseResponse>({
+      queryKey: ["expenses", filters],
+      queryFn: fetchAllExpenses,
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+      initialPageParam: 0,
+    });
 
-//       if (error) throw error;
-//       return data;
-//     },
-//     onSuccess: (data) => {
-//       // Update individual post cache
-//       queryClient.setQueryData(postKeys.detail(data.id), data);
-//       // Invalidate lists
-//       queryClient.invalidateQueries({ queryKey: postKeys.lists() });
-//     },
-//   });
-// };
-
-// // Delete post mutation
-// export const useDeletePost = () => {
-//   const queryClient = useQueryClient();
-
-//   return useMutation({
-//     mutationFn: async (id: string) => {
-//       const { error } = await supabase.from("posts").delete().eq("id", id);
-
-//       if (error) throw error;
-//       return id;
-//     },
-//     onSuccess: (deletedId) => {
-//       // Remove from cache
-//       queryClient.removeQueries({ queryKey: postKeys.detail(deletedId) });
-//       // Invalidate lists
-//       queryClient.invalidateQueries({ queryKey: postKeys.lists() });
-//     },
-//   });
-// };
+  return {
+    isFetchingNextPage,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    data,
+  };
+};

@@ -24,6 +24,7 @@ const CustomButton = ({
   prefixIcon = false,
   suffixIcon = false,
   isLoading,
+  onClick,
 }: customButtonProps) => {
   return (
     <Button
@@ -31,6 +32,7 @@ const CustomButton = ({
       type={type}
       form={formId}
       disabled={disabled}
+      onClick={onClick}
     >
       {isLoading ? (
         <Spinner data-icon="inline-start" />
