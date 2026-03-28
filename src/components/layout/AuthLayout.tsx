@@ -1,19 +1,19 @@
 import { authRoutes } from "@/data/routePaths";
 import { useAuth } from "@clerk/react";
-import type { ReactNode } from "react";
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
+import Navbar from "./Navbar";
+import { SidebarProvider } from "../ui/sidebar";
+import AppSidebar from "./AppSidebar";
+import { TooltipProvider } from "../ui/tooltip";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AuthLayoutProps {
-  children: ReactNode;
   redirectTo?: string;
 }
 
-const AuthLayout = ({
-  children,
-  redirectTo = authRoutes.login,
-}: AuthLayoutProps) => {
+const AuthLayout = ({ redirectTo = authRoutes.login }: AuthLayoutProps) => {
   const { isSignedIn, isLoaded } = useAuth();
-
+  const isMobile = useIsMobile();
   if (!isLoaded) {
     return null; // Or a loading spinner
   }
@@ -22,7 +22,18 @@ const AuthLayout = ({
     return <Navigate to={redirectTo} replace />;
   }
 
-  return <>{children}</>;
+  return (
+    <TooltipProvider>
+      {!isMobile ? <Navbar /> : null}
+      <SidebarProvider>
+        <AppSidebar />
+        {isMobile ? <Navbar /> : null}
+      </SidebarProvider>
+      <main>
+        <Outlet />
+      </main>
+    </TooltipProvider>
+  );
 };
 
 export default AuthLayout;

@@ -1,53 +1,68 @@
-import { authRoutes, expesnsesRoutes } from "@/data/routePaths";
+import {
+  authRoutes,
+  expesnsesRoutes,
+  protectedRoutes,
+  publicRoutes,
+} from "@/data/routePaths";
 import { Show, UserButton } from "@clerk/react";
+import clsx from "clsx";
 import { Link } from "react-router";
+import SidebarTooltipTrigger from "./SidebarTooltipTrigger";
+import { Menu } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navbar = () => {
+  const isMobile = useIsMobile();
+
   return (
-    <header className="bg-green-200 h-(--nav-height) py-2">
-      <nav className="xl:max-w-7xl max-w-[calc(100%-30px)]  mx-auto flex  justify-between">
-        <Link
-          to={expesnsesRoutes.list}
-          className="text-light-gray md:text-xl text-lg"
-        >
-          Expenses Tracker
-        </Link>
+    <header
+      className={clsx(
+        "bg-green-200 h-(--nav-height) py-2",
+        isMobile ? "w-screen" : "",
+      )}
+    >
+      <nav className="xl:max-w-7xl max-w-[calc(100%-30px)] mx-auto flex  justify-between">
+        {/* Logo and Side bar trigger */}
+        {/* Custom trigger */}
+        {isMobile ? (
+          <SidebarTooltipTrigger
+            tooltipTitle="Expand"
+            icon={<Menu className="size-5.5" />}
+            classNames="w-fit h-fit self-center has-[>svg]:px-0"
+          />
+        ) : (
+          <Link
+            to={expesnsesRoutes.list}
+            className="text-light-gray md:text-xl text-lg md:ml-12 xl:ml-0 sm:ml-0"
+          >
+            Expenses Tracker
+          </Link>
+        )}
 
-        <div>
+        <ul className="flex gap-2.5">
           <Show when="signed-out">
-            <ul className="flex items-center gap-2.5">
-              <li>
-                <Link to={authRoutes.login} className="navlink">
-                  Log In
+            {publicRoutes.map(({ href, title }) => (
+              <li key={href}>
+                <Link to={href} className="navlink">
+                  {title}
                 </Link>
               </li>
-
-              <li>
-                <Link to={authRoutes.register} className="navlink">
-                  Register
-                </Link>
-              </li>
-            </ul>
+            ))}
           </Show>
           <Show when="signed-in">
-            <ul className="flex gap-2.5">
-              <li>
-                <Link to={expesnsesRoutes.list} className="navlink">
-                  Expenses
+            {protectedRoutes.map(({ href, title }) => (
+              <li key={href}>
+                <Link to={href} className="navlink">
+                  {title}
                 </Link>
               </li>
-              <li>
-                <Link to={expesnsesRoutes.addNew} className="navlink">
-                  Add New
-                </Link>
-              </li>
+            ))}
 
-              <li className="md:flex hidden">
-                <UserButton signInUrl={authRoutes.login} />
-              </li>
-            </ul>
+            <li className="md:flex hidden">
+              <UserButton signInUrl={authRoutes.login} />
+            </li>
           </Show>
-        </div>
+        </ul>
       </nav>
     </header>
   );

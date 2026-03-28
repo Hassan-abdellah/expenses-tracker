@@ -5,7 +5,7 @@ const ExpensesSkeleton = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       {Array.from({ length: 10 }).map((_, i) => (
-        <Card className="w-full" key={i}>
+        <Card className="card-width" key={i}>
           <CardHeader className="border-b border-gray-100 flex items-center justify-between [.border-b]:pb-2">
             <Skeleton className="h-4 w-2/3 bg-light-gray" />
             <div className="flex items-center gap-2">
