@@ -7,5 +7,17 @@ export const expesnsesRoutes = {
   addNew: "/",
 };
 
-export const protectedRoutes = [expesnsesRoutes.list, expesnsesRoutes.addNew];
-export const publicRoutes = [authRoutes.login, authRoutes.register];
+export const protectedRoutes = [
+  {
+    title: "Expenses",
+    href: expesnsesRoutes.list,
+  },
+  {
+    title: "Add New",
+    href: expesnsesRoutes.addNew,
+  },
+];
+export const publicRoutes = [
+  { title: "Log In", href: authRoutes.login },
+  { title: "Register", href: authRoutes.register },
+];
