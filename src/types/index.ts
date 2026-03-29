@@ -30,3 +30,9 @@ export interface SupabaseError {
   hint: string;
   statusCode?: number; // Optional, might not always be present
 }
+
+export interface ExpenseChartType {
+  id: number;
+  amount: number;
+  effective_date: string; // ISO date string
+}

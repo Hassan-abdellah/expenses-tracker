@@ -16,7 +16,7 @@ import {
   LayoutDashboardIcon,
 } from "lucide-react";
 import { UserButton } from "@clerk/react";
-import { authRoutes } from "@/data/routePaths";
+import { authRoutes, dashboardsRoutes } from "@/data/routePaths";
 import { Link } from "react-router";
 import { Button } from "../ui/button";
 import SidebarItem from "./SidebarItem";
@@ -47,7 +47,7 @@ const AppSidebar = () => {
         <SidebarGroup className="space-y-2">
           <SidebarItem
             title="Dashboard"
-            url="/"
+            url={dashboardsRoutes.index}
             icon={<LayoutDashboardIcon />}
           />
           <SidebarItem

@@ -25,7 +25,7 @@ const AuthLayout = ({ redirectTo = authRoutes.login }: AuthLayoutProps) => {
   return (
     <TooltipProvider>
       {!isMobile ? <Navbar /> : null}
-      <SidebarProvider>
+      <SidebarProvider defaultOpen={false}>
         <AppSidebar />
         {isMobile ? <Navbar /> : null}
       </SidebarProvider>

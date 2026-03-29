@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { SidebarMenuButton } from "../ui/sidebar";
+import { SidebarMenuButton, useSidebar } from "../ui/sidebar";
 import { Link } from "react-router";
 
 const SidebarItem = ({
@@ -11,9 +11,20 @@ const SidebarItem = ({
   url: string;
   icon: ReactNode;
 }) => {
+  const { open, openMobile, setOpen, setOpenMobile } = useSidebar();
   return (
     <SidebarMenuButton asChild tooltip={title} className="hover:bg-light-gray">
-      <Link to={url}>
+      <Link
+        to={url}
+        onClick={() => {
+          if (openMobile) {
+            setOpenMobile(false);
+          }
+          if (open) {
+            setOpen(false);
+          }
+        }}
+      >
         {icon}
         <span>{title}</span>
       </Link>

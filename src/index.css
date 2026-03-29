@@ -173,6 +173,10 @@
   .card-width {
     @apply lg:w-full w-[calc(100%-30px)];
   }
+
+  .container {
+    @apply xl:max-w-7xl max-w-[calc(100%-30px)] mx-auto;
+  }
 }
 
 /* for clerk footer in user dropdown */
