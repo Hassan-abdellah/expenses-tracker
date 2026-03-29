@@ -6,6 +6,9 @@ export const expesnsesRoutes = {
   list: "/expenses",
   addNew: "/",
 };
+export const dashboardsRoutes = {
+  index: "/dashboard",
+};
 
 export const protectedRoutes = [
   {

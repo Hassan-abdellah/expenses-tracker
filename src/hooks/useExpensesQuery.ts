@@ -1,11 +1,15 @@
 // hooks/useExpensesQuery.ts
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSupabaseClient } from "./useSupabaseClient";
-import type { expeneseType, expensesFilterType } from "@/types";
+import type {
+  expeneseType,
+  ExpenseChartType,
+  expensesFilterType,
+} from "@/types";
 
 type GetExpenseResponse = {
   error: Error | null;
-  data: expeneseType[] | [];
+  data: ExpenseChartType[] | [];
 };
 
 // Fetch all expenses
@@ -18,7 +22,7 @@ export const useAllExpenses = (filters?: expensesFilterType | null) => {
   ): Promise<GetExpenseResponse> => {
     let query = supabase
       .from("expenses")
-      .select("*")
+      .select("amount,effective_date,id")
       .order("created_at", { ascending: false });
 
     if (filters?.startDate) {
@@ -30,13 +34,10 @@ export const useAllExpenses = (filters?: expensesFilterType | null) => {
     if (filters?.effectiveDate) {
       query = query.eq("effective_date", filters.effectiveDate);
     }
-    if (filters?.id) {
-      query = query.eq("id", filters.id);
-    }
 
     const { data, error } = await query;
     return {
-      data: data as expeneseType[] | [],
+      data: data as ExpenseChartType[] | [],
       error,
     };
   };
@@ -47,7 +48,7 @@ export const useAllExpenses = (filters?: expensesFilterType | null) => {
   });
 };
 
-// Fetch all expenses
+// Fetch single expense
 export const useViewExpense = (expenseId: number, enabled: boolean = true) => {
   const supabase = useSupabaseClient();
 

@@ -21,7 +21,7 @@ const Navbar = () => {
         isMobile ? "w-screen" : "",
       )}
     >
-      <nav className="xl:max-w-7xl max-w-[calc(100%-30px)] mx-auto flex  justify-between">
+      <nav className="container flex justify-between">
         {/* Logo and Side bar trigger */}
         {/* Custom trigger */}
         {isMobile ? (
