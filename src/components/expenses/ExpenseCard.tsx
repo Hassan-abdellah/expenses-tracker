@@ -32,7 +32,7 @@ const ExpenseCard = ({ expense }: { expense: expeneseType }) => {
     <Fragment>
       <Card className="card-width">
         <CardHeader className="border-b border-gray-100 flex items-center justify-between [.border-b]:pb-2">
-          <CardTitle className="text-green-200">{expense.label}</CardTitle>
+          <CardTitle className="text-green-400">{expense.label}</CardTitle>
           <CardAction className="flex items-center gap-2">
             {expense.id ? (
               <UpdateExpensesForm
@@ -41,7 +41,7 @@ const ExpenseCard = ({ expense }: { expense: expeneseType }) => {
                   <Tooltip>
                     <TooltipTrigger
                       onClick={() => setOpen(true)}
-                      className="hover:bg-gray-300 hover:text-white text-gray-300 cursor-pointer border-2 border-gray-300 rounded-full w-7 h-7 flex items-center justify-center"
+                      className="hover:bg-green-200 hover:text-white text-green-200 cursor-pointer border-2 border-green-200 rounded-full w-7 h-7 flex items-center justify-center"
                     >
                       <PencilIcon className="w-4 h-4" />
                     </TooltipTrigger>
@@ -60,7 +60,7 @@ const ExpenseCard = ({ expense }: { expense: expeneseType }) => {
                 <Tooltip>
                   <TooltipTrigger
                     onClick={() => setOpen(true)}
-                    className="hover:bg-destructive hover:text-white text-destructive cursor-pointer border-2 border-destructive rounded-full w-7 h-7 flex items-center justify-center"
+                    className="hover:bg-pink-purple hover:text-white text-pink-purple cursor-pointer border-2 border-pink-purple rounded-full w-7 h-7 flex items-center justify-center"
                   >
                     <TrashIcon className="w-4 h-4" />
                   </TooltipTrigger>

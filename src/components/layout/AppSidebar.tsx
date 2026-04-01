@@ -26,7 +26,7 @@ const AppSidebar = () => {
   const { open, openMobile, toggleSidebar } = useSidebar();
   return (
     <Sidebar collapsible="icon" className="bg-light-gray">
-      <SidebarHeader className="bg-green-200 text-light-gray h-(--nav-height) flex-row items-center justify-between">
+      <SidebarHeader className="bg-green-400 text-light-gray h-(--nav-height) flex-row items-center justify-between">
         <SidebarMenuButton asChild tooltip={"Expenses Tracker"}>
           <Link to={"/"}>
             <DollarSignIcon />

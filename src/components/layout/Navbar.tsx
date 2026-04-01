@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <header
       className={clsx(
-        "bg-green-200 h-(--nav-height) py-2",
+        "bg-green-400 h-(--nav-height) py-2",
         isMobile ? "w-screen" : "",
       )}
     >

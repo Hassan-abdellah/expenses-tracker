@@ -39,8 +39,8 @@ const DeleteModal = ({
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent className="bg-white border-0 px-0">
           <AlertDialogHeader className="flex flex-col sm:group-data-[size=default]/alert-dialog-content:place-items-center">
-            <AlertDialogMedia className="bg-destructive/10 w-10 h-10">
-              <Trash2Icon className="text-red w-7 h-7" />
+            <AlertDialogMedia className="bg-pink-purple/10 w-10 h-10">
+              <Trash2Icon className="text-pink-purple w-7 h-7" />
             </AlertDialogMedia>
 
             <AlertDialogTitle className="text-center">
@@ -51,7 +51,8 @@ const DeleteModal = ({
 
           <AlertDialogFooter className="border-t border-gray-100 pt-4 px-4">
             <AlertDialogAction
-              className="cursor-pointer bg-red-500 text-white rounded-md px-4 py-2 transition-colors duration-350 hover:bg-red-600"
+              variant="outline"
+              className="cursor-pointer bg-pink-purple text-white rounded-md px-4 py-2 transition-colors duration-350 hover:bg-pink-purple/80 hover:text-white"
               onClick={() => {
                 onDelete();
                 setOpen(false);
