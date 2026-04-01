@@ -43,7 +43,7 @@ const ExpensesListPage = () => {
                 <Button
                   onClick={() => fetchNextPage()}
                   disabled={isFetchingNextPage}
-                  className="flex items-center gap-1.5 mx-auto px-10 py-5 bg-green-100 text-white hover:bg-green-200 transition-colors duration-300 cursor-pointer rounded-3xl"
+                  className="flex items-center gap-1.5 mx-auto px-10 py-5 bg-green-300 text-white hover:bg-green-200 transition-colors duration-300 cursor-pointer rounded-3xl"
                 >
                   {isFetchingNextPage ? <Spinner /> : null}
                   <span>Load More</span>

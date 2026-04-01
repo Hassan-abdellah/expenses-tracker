@@ -49,13 +49,18 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --color-green-100: #66d0bc;
+  /* --color-green-100: #66d0bc;
   --color-green-200: #54bd95;
   --color-green-300: #3a8b95;
   --color-teal-100: #48cfcb;
-  --color-teal-500: #229799;
+  --color-teal-500: #229799; */
+  --color-green-100: #92f2e8;
+  --color-green-200: #1ee3cf;
+  --color-green-300: #1bccba;
+  --color-green-400: #159f91;
   --color-light-gray: #f5f5f5;
   --color-muted-black: #424242;
+  --color-pink-purple: #f72585;
 }
 
 :root {
@@ -157,17 +162,17 @@
   }
 
   .pill-button {
-    @apply relative border-2 border-transparent bg-green-200 w-full rounded-3xl  text-white cursor-pointer py-5 
-    hover:text-green-200 hover:bg-transparent hover:border-green-200
+    @apply relative border-2 border-transparent bg-green-300 w-full rounded-3xl  text-white cursor-pointer py-5 
+    hover:text-green-200 hover:bg-transparent hover:border-green-300
     transition-colors duration-300;
   }
 
   .pill-button-icon {
-    @apply w-6 h-6 bg-green-200 text-white rounded-full flex items-center justify-center;
+    @apply w-6 h-6 bg-green-300 text-white rounded-full flex items-center justify-center;
   }
 
   .navlink {
-    @apply relative p-1 text-light-gray shadow-[0_-2px_0_0_inset] shadow-light-gray hover:shadow-[0_-100px_0_0_inset] hover:text-green-200 transition-all duration-300;
+    @apply relative p-1 text-light-gray shadow-[0_-2px_0_0_inset] shadow-light-gray hover:shadow-[0_-100px_0_0_inset] hover:text-green-400 transition-all duration-300;
   }
 
   .card-width {

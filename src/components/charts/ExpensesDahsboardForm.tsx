@@ -46,7 +46,7 @@ const ExpensesDahsboardForm = ({
           />
           <Button
             type="submit"
-            className="self-end cursor-pointer bg-green-200 hover:bg-green-100 text-white transition-colors duration-200"
+            className="self-end cursor-pointer bg-green-300 hover:bg-green-200 text-white transition-colors duration-200"
             disabled={isLoading}
           >
             <span>Submit</span>
