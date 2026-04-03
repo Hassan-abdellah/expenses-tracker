@@ -180,7 +180,7 @@
   }
 
   .container {
-    @apply xl:max-w-7xl max-w-[calc(100%-30px)] mx-auto;
+    @apply xl:max-w-7xl sm:max-w-[calc(100%-7rem)] max-w-[calc(100%-2rem)] mx-auto;
   }
 }
 
