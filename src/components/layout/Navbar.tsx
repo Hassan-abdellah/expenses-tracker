@@ -33,7 +33,8 @@ const Navbar = () => {
         ) : (
           <Link
             to={expesnsesRoutes.list}
-            className="text-light-gray md:text-xl text-lg md:ml-12 xl:ml-0 sm:ml-0"
+            // className="text-light-gray md:text-xl text-lg md:ml-12 xl:ml-0 sm:ml-0"
+            className="text-light-gray md:text-xl text-lg"
           >
             Expenses Tracker
           </Link>

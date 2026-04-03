@@ -1,10 +1,8 @@
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -30,7 +28,6 @@ const ExpensesBarChart = ({ expenses }: { expenses: ExpenseChartType[] }) => {
     <Card>
       <CardHeader>
         <CardTitle>Expenses</CardTitle>
-        <CardDescription>January - December 2026</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-20 w-full">
@@ -54,12 +51,9 @@ const ExpensesBarChart = ({ expenses }: { expenses: ExpenseChartType[] }) => {
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total Expenses for the last 12 months
+      <CardFooter className="justify-center">
+        <div className="leading-none text-gray-400">
+          Showing total of {expenses.length} Expenses
         </div>
       </CardFooter>
     </Card>

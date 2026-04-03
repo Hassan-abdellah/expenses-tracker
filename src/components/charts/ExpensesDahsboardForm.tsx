@@ -30,7 +30,7 @@ const ExpensesDahsboardForm = ({
       </CardHeader>
       <CardContent>
         <form
-          className="flex items-center gap-2"
+          className="flex items-center flex-col md:flex-row gap-2"
           onSubmit={(e) => {
             e.preventDefault();
             handleFilters(dateRange);
@@ -46,7 +46,7 @@ const ExpensesDahsboardForm = ({
           />
           <Button
             type="submit"
-            className="self-end cursor-pointer bg-green-300 hover:bg-green-200 text-white transition-colors duration-200"
+            className="md:self-end self-start cursor-pointer bg-green-300 hover:bg-green-200 text-white transition-colors duration-200"
             disabled={isLoading}
           >
             <span>Submit</span>

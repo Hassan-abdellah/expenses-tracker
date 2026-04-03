@@ -3,9 +3,11 @@ import {
   addMonths,
   addWeeks,
   addYears,
+  endOfYear,
   format,
   isValid,
   parseISO,
+  startOfYear,
   subDays,
   subMonths,
   subWeeks,
@@ -50,42 +52,6 @@ export const isValidDate = (value: string | number | Date | null) => {
   return isValid(date);
 };
 
-export const addToDate = (
-  date: string | Date,
-  amount: number,
-  unit: "days" | "months" | "years",
-) => {
-  if (!date || !isValidDate(date)) return;
-  const parsedDate = typeof date === "string" ? new Date(date) : date;
-  switch (unit) {
-    case "days":
-      return addDays(parsedDate, amount);
-    case "months":
-      return addMonths(parsedDate, amount);
-    case "years":
-      return addYears(parsedDate, amount);
-    default:
-      return "";
-  }
-};
-export const subtractFromDate = (
-  date: string | Date,
-  amount: number,
-  unit: "days" | "months" | "years",
-) => {
-  if (!date || !isValidDate(date)) return;
-  const parsedDate = typeof date === "string" ? new Date(date) : date;
-  switch (unit) {
-    case "days":
-      return subDays(parsedDate, amount);
-    case "months":
-      return subMonths(parsedDate, amount);
-    case "years":
-      return subYears(parsedDate, amount);
-    default:
-      return "";
-  }
-};
 export const dateDifference = (
   date: string | Date,
   amount: number,
@@ -113,4 +79,33 @@ export const dateDifference = (
     default:
       return parsedDate;
   }
+};
+
+// get the end of the year from a given date
+export const getEndOfYearFromDate = (date: string | Date) => {
+  if (!date || !isValidDate(date)) return;
+
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
+
+  return endOfYear(parsedDate);
+};
+
+// get the start of the year from a given date
+export const getStartOfYearFromDate = (date: string | Date) => {
+  if (!date || !isValidDate(date)) return;
+
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
+
+  return startOfYear(parsedDate);
+};
+
+// get the end of the current year
+
+export const getEndOfCurrentYear = () => {
+  return endOfYear(new Date());
+};
+// get the start of the current year
+
+export const getStartOfCurrentYear = () => {
+  return startOfYear(new Date());
 };
