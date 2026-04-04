@@ -16,12 +16,7 @@ const ExpensesListPage = () => {
   return (
     <section className="flex flex-col max-w-xl mx-auto my-8">
       <div className="flex items-center justify-between mb-4 mx-4 lg:mx-0">
-        <h3 className="text-muted-black text-2xl">
-          Expenses{" "}
-          {expenses.length
-            ? `(${expenses.length}) ${expenses.reduce((total, item) => total + Number(item.amount), 0).toLocaleString("en-US")} E£`
-            : null}
-        </h3>
+        <h3 className="text-muted-black text-2xl">Expenses</h3>
         <ExpensesFilterDropdown setFilters={setFilters} />
       </div>
 

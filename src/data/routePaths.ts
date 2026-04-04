@@ -10,6 +10,10 @@ export const dashboardsRoutes = {
   index: "/dashboard",
 };
 
+export const UIPages = {
+  comingSoon: "/coming-soon",
+};
+
 export const protectedRoutes = [
   {
     title: "Expenses",
