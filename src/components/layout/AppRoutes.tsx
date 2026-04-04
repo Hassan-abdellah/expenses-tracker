@@ -5,12 +5,15 @@ import {
   authRoutes,
   dashboardsRoutes,
   expesnsesRoutes,
+  UIPages,
 } from "@/data/routePaths";
 import ExpensesListPage from "@/pages/Expenses/ExpensesListPage";
 import RegisterPage from "@/pages/Auth/RegisterPage";
 import LoginPage from "@/pages/Auth/LoginPage";
 import Layout from "./Layout";
 import DashboardPage from "@/pages/Dashboard/DashboardPage";
+import ComingSoonPage from "@/pages/UI/ComingSoonPage";
+import NotFoundPage from "@/pages/UI/NotFoundPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -19,11 +22,14 @@ const AppRoutes = () => {
         <Route index element={<CreateExpensesForm />} />
         <Route path={expesnsesRoutes.list} element={<ExpensesListPage />} />
         <Route path={dashboardsRoutes.index} element={<DashboardPage />} />
+        <Route path={UIPages.comingSoon} element={<ComingSoonPage />} />
+        <Route path={"*"} element={<NotFoundPage />} />
       </Route>
       {/* Public Routes */}
       <Route element={<Layout />}>
         <Route path={authRoutes.register} element={<RegisterPage />} />
         <Route path={authRoutes.login} element={<LoginPage />} />
+        <Route path={"*"} element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

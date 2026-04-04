@@ -16,7 +16,7 @@ import {
   LayoutDashboardIcon,
 } from "lucide-react";
 import { UserButton } from "@clerk/react";
-import { authRoutes, dashboardsRoutes } from "@/data/routePaths";
+import { authRoutes, dashboardsRoutes, UIPages } from "@/data/routePaths";
 import { Link } from "react-router";
 import { Button } from "../ui/button";
 import SidebarItem from "./SidebarItem";
@@ -52,11 +52,15 @@ const AppSidebar = () => {
           />
           <SidebarItem
             title="Monthly Expenses"
-            url="/"
+            url={UIPages.comingSoon}
             icon={<CalendarCheck />}
           />
 
-          <SidebarItem title="Wishlist" url="/" icon={<Heart />} />
+          <SidebarItem
+            title="Wishlist"
+            url={UIPages.comingSoon}
+            icon={<Heart />}
+          />
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="space-y-4">
