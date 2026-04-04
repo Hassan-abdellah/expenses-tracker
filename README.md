@@ -5,6 +5,7 @@
 ```
 - React JS using Vite for dynamic UI
 - React Router DOM for Navigation
+- React Query for Optimized Data Fetching
 - Typescript for Type Safety
 - Shadcn for UI Components
 - Tailwind CSS for Styling
