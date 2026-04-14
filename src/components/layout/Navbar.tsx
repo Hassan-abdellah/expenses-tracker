@@ -4,7 +4,7 @@ import {
   protectedRoutes,
   publicRoutes,
 } from "@/data/routePaths";
-import { Show, UserButton } from "@clerk/react";
+import { Show, useAuth, UserButton } from "@clerk/react";
 import clsx from "clsx";
 import { Link } from "react-router";
 import SidebarTooltipTrigger from "./SidebarTooltipTrigger";
@@ -13,6 +13,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navbar = () => {
   const isMobile = useIsMobile();
+  const { isSignedIn } = useAuth();
 
   return (
     <header
@@ -24,7 +25,7 @@ const Navbar = () => {
       <nav className="container flex justify-between">
         {/* Logo and Side bar trigger */}
         {/* Custom trigger */}
-        {isMobile ? (
+        {isMobile && isSignedIn ? (
           <SidebarTooltipTrigger
             tooltipTitle="Expand"
             icon={<Menu className="size-5.5" />}
