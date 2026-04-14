@@ -96,7 +96,7 @@ export const useExpensesMutation = () => {
       // Return context with previous data
       return { previousExpenses };
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       // Rollback on error
       if (context?.previousExpenses) {
         queryClient.setQueryData(["expenses"], context.previousExpenses);
